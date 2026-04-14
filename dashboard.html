@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>干饭报名 - 实时看板</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react@18/umd/react.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://resource.trickle.so/vendor_lib/unpkg/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://resource.trickle.so/vendor_lib/unpkg/lucide-static@0.516.0/font/lucide.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+
+    <script>
+        const ChartJS = window.Chart;
+    </script>
+
+    <style type="text/tailwindcss">
+    @layer theme {
+        :root {
+            --primary-color: #2c3e50; /* Deep Ink Blue */
+            --accent-color: #bfa05f;  /* Muted Gold */
+            --secondary-color: #9a2323; /* Seal Red */
+            --bg-color: #fcfcfc;
+            --card-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            
+            /* Assets */
+            --header-bg-img: url('https://app.trickle.so/storage/public/images/usr_1a810ecaf8000001/529b0f07-0509-4e85-9d30-6d7e20b05895.jpeg');
+            --mascot-img: url('https://app.trickle.so/storage/public/images/usr_1a810ecaf8000001/c0921e22-7519-441a-b085-149eaedd50d8.png');
+            --bg-pattern: url('https://app.trickle.so/storage/public/images/usr_1a810ecaf8000001/26873dce-e827-4fa9-85d1-05560d2234be.jpeg');
+        }
+    }
+
+    @layer base {
+        body {
+            @apply bg-[var(--bg-color)] text-[var(--text-main)] antialiased;
+            font-family: "Noto Serif SC", serif;
+            background-image: 
+                linear-gradient(rgba(252, 252, 252, 0.95), rgba(252, 252, 252, 0.95)),
+                var(--bg-pattern);
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        h1, h2, h3, h4, h5, h6,
+            p, div, span, label, li, a,
+            .card, .label, .btn, .input-field {
+            font-family: "Noto Serif SC", serif;
+            font-weight: 700;
+        }
+    }
+    
+    @layer components {
+        .card {
+            @apply bg-[var(--card-bg)] rounded-sm p-4 md:p-6 mb-4 md:mb-6 relative border border-gray-100 shadow-sm;
+        }
+        /* Fret Pattern Border Top/Bottom */
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='4' viewBox='0 0 20 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4h20v-2h-2v2h-2v-2h-2v2h-2v-2h-2v2h-2v-2H6v2H4v-2H2v2H0z' fill='%231e293b' fill-opacity='0.1'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .card::before { top: 0; }
+        .card::after { bottom: 0; transform: rotate(180deg); }
+
+        .stat-value { @apply text-3xl font-bold text-[var(--primary-color)]; }
+        .stat-label { @apply text-sm text-gray-500 uppercase tracking-wide font-bold; }
+    }
+
+    @layer utilities {
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel" src="utils/db.js"></script>
+    <script type="text/babel" src="utils/helpers.js"></script>
+    <script type="text/babel" src="components/Alert.js"></script>
+    <script type="text/babel" src="components/Header.js"></script>
+    <script type="text/babel" src="components/Layout.js"></script>
+    <script type="text/babel" src="dashboard-app.js"></script>
+</body>
+</html>
